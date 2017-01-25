@@ -23,10 +23,24 @@ def init(directory, config_file=None):
 @click.argument('directory')
 @click.option('--config-file', default=None, 
         help='Absolute path to the configuration file.')
-def new(directory, config_file=None):
+@click.option('--vcs', '-v', default=None,
+        type=click.Choice(['git', 'hg']),
+        help='Specify nondefault version control software.')
+@click.option('--dependency', '-d', default=None,
+        type=click.Choice([]),
+        help='Specify nondefault dependency management tool.')
+@click.option('--environment', '-e', default=None,
+        type=click.Choice([]),
+        help='Specify nondefault virtual environment tool.')
+@click.option('--test', '-t', default=None,
+        type=click.Choice([]),
+        help='Specify nondefault testing framework.')
+def new(directory, config_file=None, **tools):
     """Create a new project from scratch.
 
     Creates a new project in the folder specified by DIRECTORY.
+    This project will be configured according to your global tut file, unless
+    you specify a nondefault config or a different tool.
     """
 
     print('creating new project in {}'.format(os.path.join(os.getcwd(), directory)))
@@ -37,8 +51,12 @@ def new(directory, config_file=None):
     else:
         config_data = utils.interactive_config_data()
 
+    for tool in tools:
+        if tools[tool]:
+            config_data[tool] = {'name': tools[tool]}
+
     for tool in config_data:
-        print(tool)
+        print(tool + ": " + str(config_data[tool]))
 
 @cli.command()
 def shell():
