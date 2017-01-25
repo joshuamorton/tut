@@ -1,7 +1,7 @@
 import os
 import toml
 
-def interactive_plugins():
+def interactive_config_data():
     raise NotImplementedError('not done yet')
 
 def resolve_config(config_dir):

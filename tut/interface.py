@@ -17,7 +17,7 @@ def init(directory, config_file=None):
     """Create a new project in an existing folder.
     """
     config_location = utils.resolve_config(config_file)
-    click.echo(directory)
+    print(config_location, directory)
 
 @cli.command()
 @click.argument('directory')
@@ -35,10 +35,34 @@ def new(directory, config_file=None):
         print('using config folder: ' + config_location)
         config_data = utils.parse_config_file(config_location)
     else:
-        config_data = utils.interactive_plugins()
+        config_data = utils.interactive_config_data()
 
-    for plugin in config_data:
-        print(plugin)
+    for tool in config_data:
+        print(tool)
+
+@cli.command()
+def shell():
+    """Spawn an interactive shell inside the project environment.
+    """
+    pass
+
+@cli.command()
+def run():
+    """Run a single command in the project environment.
+    """
+    pass
+
+@cli.command()
+def install():
+    """Install a project dependency in the project environment.
+    """
+    pass
+
+@cli.command()
+def test():
+    """Run project tests and report results.
+    """
+    pass
 
 if __name__ == '__main__':
     cli()
