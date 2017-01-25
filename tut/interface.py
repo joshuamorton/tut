@@ -1,54 +1,43 @@
 import click
-import json
-import sys
 import os
-import toml
+
 import utils
 
-settings = {}
-
-
 @click.group()
-@click.option('--config', default=None, 
-        help='Absolute path to the configuration file.')
-def cli(config):
-    if config is not None:
-        settings['config'] = config
-    elif os.path.isfile(os.path.expanduser('~/.config/.tutconfig')):
-        settings['config'] = '~/.config/.tutconfig'
-    elif os.path.isfile(os.path.expanduser('~/.tutconfig')):
-        settings['config'] = '~/.tutconfig'
-    else:
-        settings['config'] = None
+def cli():
+    """A tool to manage python projects.
+    """
+    pass
 
 @cli.command()
 @click.argument('directory')
-def init(directory):
+@click.option('--config-file', default=None, 
+        help='Absolute path to the configuration file.')
+def init(directory, config_file=None):
     """Create a new project in an existing folder.
     """
+    config_location = utils.resolve_config(config_file)
     click.echo(directory)
 
 @cli.command()
 @click.argument('directory')
-def new(directory):
+@click.option('--config-file', default=None, 
+        help='Absolute path to the configuration file.')
+def new(directory, config_file=None):
     """Create a new project from scratch.
 
     Creates a new project in the folder specified by DIRECTORY.
     """
-    print('creating new project in {}'.format(os.path.join(os.getcwd(), directory)))
-    print(settings)
-    if settings['config']:
-        print('using config folder: ' + settings['config'])
-        try:
-            with open(os.path.expanduser(settings['config']), 'r') as cfg:
-                settings['plugins'] = toml.loads(cfg.read())
-        except FileNotFoundError:
-            click.echo("{} is not a valid configuration folder"
-                    .format(settings['config']))
-    else:
-        settings['plugins'] = utils.interactive_plugins()
 
-    for plugin in settings['plugins']:
+    print('creating new project in {}'.format(os.path.join(os.getcwd(), directory)))
+    config_location = utils.resolve_config(config_file)
+    if config_location:
+        print('using config folder: ' + config_location)
+        config_data = utils.parse_config_file(config_location)
+    else:
+        config_data = utils.interactive_plugins()
+
+    for plugin in config_data:
         print(plugin)
 
 if __name__ == '__main__':
