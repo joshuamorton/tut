@@ -1,0 +1,9 @@
+[tools]
+vcs = "git"
+python = 3.4
+test = 'pytest'
+environment = 'venv'
+dependency = 'requirements'
+
+[plugins]
+name = 'python.package.name'
