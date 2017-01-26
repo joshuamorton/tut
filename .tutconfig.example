@@ -1,9 +1,18 @@
 [tools]
 vcs = "git"
-python = 3.4
+language = 'python'
 test = 'pytest'
 environment = 'venv'
 dependency = 'requirements'
 
 [plugins]
 name = 'python.package.name'
+
+[git]
+gi-types = ['python']
+ignored-files = []
+# you could add a template dir here
+
+[python]
+version = 3.4
+gitignore = ['python']

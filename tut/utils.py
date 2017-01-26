@@ -4,11 +4,8 @@ import toml
 def interactive_config_data():
     raise NotImplementedError('not done yet')
 
-def resolve_config(config_dir):
-    config_location = None
-    if config_dir is not None:
-        config_location = config_dir
-    elif os.path.isfile(os.path.expanduser('~/.config/.tutconfig')):
+def find_global_config():
+    if os.path.isfile(os.path.expanduser('~/.config/.tutconfig')):
         # this probably needs to be changed to what is should actually be
         # TODO
         config_location = '~/.config/.tutconfig'
@@ -26,3 +23,7 @@ def parse_config_file(config_location):
         print("{} is not a valid configuration folder"
                 .format(config_location))
     return config_data
+
+def resolve_location(path):
+    if os.path.isfile(os.path.expanduser(path)):
+        return os.path.expanduser(path)

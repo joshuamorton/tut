@@ -2,6 +2,7 @@ import click
 import os
 
 import utils
+import tools
 
 @click.group()
 def cli():
@@ -23,19 +24,24 @@ def init(directory, config_file=None):
 @click.argument('directory')
 @click.option('--config-file', default=None, 
         help='Absolute path to the configuration file.')
-@click.option('--vcs', '-v', default=None,
+@click.option('--vcs', '-v',
         type=click.Choice(['git', 'hg']),
         help='Specify nondefault version control software.')
-@click.option('--dependency', '-d', default=None,
+@click.option('--dependency', '-d',
         type=click.Choice([]),
         help='Specify nondefault dependency management tool.')
-@click.option('--environment', '-e', default=None,
-        type=click.Choice([]),
+@click.option('--environment', '-e',
+        type=click.Choice(['venv', 'virtualenv', 'conda', 'docker']),
         help='Specify nondefault virtual environment tool.')
-@click.option('--test', '-t', default=None,
-        type=click.Choice([]),
+@click.option('--test', '-t',
+        type=click.Choice(['pytest', 'unittest', 'nose', 'tox']),
         help='Specify nondefault testing framework.')
-def new(directory, config_file=None, **tools):
+@click.option('--python', '-p',
+        type=click.Choice([]),
+        help='Specify nondefault python version.')
+@click.option('--unreal', 'modify', flag_value=False, default=True)
+@click.option('--real', 'modify', flag_value=True)
+def new(directory, modify, config_file=None, **build_tools):
     """Create a new project from scratch.
 
     Creates a new project in the folder specified by DIRECTORY.
@@ -43,20 +49,37 @@ def new(directory, config_file=None, **tools):
     you specify a nondefault config or a different tool.
     """
 
-    print('creating new project in {}'.format(os.path.join(os.getcwd(), directory)))
-    config_location = utils.resolve_config(config_file)
-    if config_location:
-        print('using config folder: ' + config_location)
-        config_data = utils.parse_config_file(config_location)
-    else:
-        config_data = utils.interactive_config_data()
+    default_config = utils.find_global_config()
+    settings = dict()
+    if default_config:
+        settings = utils.parse_config_file(default_config)
 
-    for tool in tools:
-        if tools[tool]:
-            config_data[tool] = {'name': tools[tool]}
+    if config_file:
+        local_config = utils.resolve_location(config_file)
+        settings.update(utils.parse_config_file(local_config))
 
-    for tool in config_data:
-        print(tool + ": " + str(config_data[tool]))
+    settings['tools'].update({k: v for k, v in build_tools.items() if v})
+
+    project_tools = dict()
+
+    for tool in tools.EVALUATION_ORDER:
+        # this is the actual loop that will run everything
+        choice = settings['tools'][tool]
+        print("Using {} as {} tool.".format(choice, tool))
+        if tools.TOOL_MAPPING[tool][choice] is not None:
+            project_tools[tool] = tools.TOOL_MAPPING[tool][choice](settings[choice], directory)
+            print('\t' + str(project_tools[tool]))
+
+    print()
+    for plugin in settings['plugins']:
+        print(plugin, settings['plugins'][plugin])
+
+    if modify:
+        print('modifying file structure')
+        os.mkdir(os.path.join(os.getcwd(), directory))
+        for tool in tools.EVALUATION_ORDER:
+            if tool in project_tools:
+                project_tools[tool].initialize_environment()
 
 @cli.command()
 def shell():
