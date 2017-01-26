@@ -5,16 +5,18 @@ to by the shell commands.
 """
 
 import abc
+import os
 
 class TutTool(metaclass=abc.ABCMeta):
-    def __init__(self, config):
+    def __init__(self, config, project_root):
         """Config is the python dict from the config file, either globally or
         locally.
         """
         self.config = config
+        self.root_dir = project_root
 
     @abc.abstractmethod
-    def initialize_environment(self, project_root, dotdir):
+    def initialize_environment(self):
         """This should initilize the project environment for the tool.
 
         As an example, a `git` tool should, in initialize_environment create
@@ -27,21 +29,19 @@ class TutTool(metaclass=abc.ABCMeta):
         """
         raise NotImplementedError()
 
-    @abc.abstractmethod
-    def register_callback(self, project_root, dotdir, command, cb):
-        """Generic way to register a callback on another tool's action.
+    @property
+    def tut_dir(self):
+        return os.path.join(self.root_dir, '.tut')
 
-        For example, the Venv EnvironmentTool might want to register a 
-        callback on the generic VCS tool to add something to the ignorefile
-        (which is a generic gitignore/hgignore/svn-ignore command).
-        """
-        raise NotImplementedError()
+    @property
+    def tutfile(self):
+        return os.path.join(self.tut_dir, '.tutfile')
 
 
 class EnvironmentTool(TutTool, metaclass=abc.ABCMeta):
     # TODO: make context manager?
     @abc.abstractmethod
-    def enter(self, project_root, dotdir):
+    def enter(self):
         """Enter the project environment.
 
         This would commonly be done by running `source dotdir/bin/activate`,
@@ -50,7 +50,7 @@ class EnvironmentTool(TutTool, metaclass=abc.ABCMeta):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def exit(self, project_root, dotdir):
+    def exit(self):
         """Exit the project environment.
 
         Akin to `deactivate` in venv.
@@ -60,15 +60,21 @@ class EnvironmentTool(TutTool, metaclass=abc.ABCMeta):
 
 class TestTool(TutTool, metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def test(self, project_root, dotdir):
+    def test(self):
         raise NotImplementedError()
 
 
 class DependencyTool(TutTool, metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def install(self, project_root, dotdir, dep):
+    def install(self, dep):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(self, project_root, dotdir, dep):
+    def update(self, dep):
+        raise NotImplementedError()
+
+
+class VCSTool(TutTool, metaclass=abc.ABCMeta):
+    @abc.abstractmethod
+    def ignore_files(self, *file_regexes):
         raise NotImplementedError()
