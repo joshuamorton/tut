@@ -27,18 +27,18 @@ def init(directory, config_file=None):
 @click.option('--vcs', '-v',
         type=click.Choice(['git', 'hg']),
         help='Specify nondefault version control software.')
-@click.option('--dependency', '-d',
-        type=click.Choice([]),
-        help='Specify nondefault dependency management tool.')
-@click.option('--environment', '-e',
-        type=click.Choice(['venv', 'virtualenv', 'conda', 'docker']),
-        help='Specify nondefault virtual environment tool.')
-@click.option('--test', '-t',
-        type=click.Choice(['pytest', 'unittest', 'nose', 'tox']),
-        help='Specify nondefault testing framework.')
 @click.option('--lang', '-l',
         type=click.Choice(['python']),
         help='Specify nondefault python version.')
+@click.option('--environment', '-e',
+        type=click.Choice(['venv', 'virtualenv', 'conda', 'docker']),
+        help='Specify nondefault virtual environment tool.')
+@click.option('--dependency', '-d',
+        type=click.Choice([]),
+        help='Specify nondefault dependency management tool.')
+@click.option('--test', '-t',
+        type=click.Choice(['pytest', 'unittest', 'nose', 'tox']),
+        help='Specify nondefault testing framework.')
 @click.option('--unreal', 'modify', flag_value=False, default=True)
 @click.option('--real', 'modify', flag_value=True)
 def new(directory, modify, config_file=None, **build_tools):
@@ -67,6 +67,8 @@ def new(directory, modify, config_file=None, **build_tools):
         choice = settings['tools'][tool]
         print("Using {} as {} tool.".format(choice, tool))
         if tools.TOOL_MAPPING[tool][choice] is not None:
+            if choice not in settings:
+                settings[choice] = {}
             project_tools[tool] = tools.TOOL_MAPPING[tool][choice](settings[choice], directory)
             print('\t' + str(project_tools[tool]))
 

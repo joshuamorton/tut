@@ -39,9 +39,8 @@ class TutTool(metaclass=abc.ABCMeta):
 
 
 class EnvironmentTool(TutTool, metaclass=abc.ABCMeta):
-    # TODO: make context manager?
     @abc.abstractmethod
-    def enter(self):
+    def __enter__(self):
         """Enter the project environment.
 
         This would commonly be done by running `source dotdir/bin/activate`,
@@ -50,7 +49,7 @@ class EnvironmentTool(TutTool, metaclass=abc.ABCMeta):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def exit(self):
+    def __exit__(self, _type, value, traceback):
         """Exit the project environment.
 
         Akin to `deactivate` in venv.

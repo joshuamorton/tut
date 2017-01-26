@@ -12,7 +12,7 @@ TOOL_MAPPING = {
             'hg': None
             },
         'environment': {
-            'venv': None
+            'venv': tools.environment.VenvTool,
             },
         'lang': {
             'python': None
