@@ -1,6 +1,6 @@
 [tools]
 vcs = "git"
-language = 'python'
+lang = 'python'
 test = 'pytest'
 environment = 'venv'
 dependency = 'requirements'

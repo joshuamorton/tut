@@ -36,8 +36,8 @@ def init(directory, config_file=None):
 @click.option('--test', '-t',
         type=click.Choice(['pytest', 'unittest', 'nose', 'tox']),
         help='Specify nondefault testing framework.')
-@click.option('--python', '-p',
-        type=click.Choice([]),
+@click.option('--lang', '-l',
+        type=click.Choice(['python']),
         help='Specify nondefault python version.')
 @click.option('--unreal', 'modify', flag_value=False, default=True)
 @click.option('--real', 'modify', flag_value=True)

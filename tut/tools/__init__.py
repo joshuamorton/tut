@@ -1,10 +1,10 @@
 import tools.vcs
 import tools.environment
-import tools.language
+import tools.lang
 import tools.dependency
 import tools.test
 
-EVALUATION_ORDER = ['vcs', 'environment', 'language' ,'dependency', 'test']
+EVALUATION_ORDER = ['vcs', 'environment', 'lang' ,'dependency', 'test']
 
 TOOL_MAPPING = {
         'vcs': {
@@ -14,7 +14,7 @@ TOOL_MAPPING = {
         'environment': {
             'venv': None
             },
-        'language': {
+        'lang': {
             'python': None
             },
         'dependency': {
