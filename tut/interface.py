@@ -3,6 +3,7 @@ import os
 
 import utils
 import tools
+import project
 
 @click.group()
 def cli():
@@ -61,6 +62,7 @@ def new(directory, modify, config_file=None, **build_tools):
     settings['tools'].update({k: v for k, v in build_tools.items() if v})
 
     project_tools = dict()
+    proj = project.Project()
 
     for tool in tools.EVALUATION_ORDER:
         # this is the actual loop that will run everything
@@ -69,7 +71,9 @@ def new(directory, modify, config_file=None, **build_tools):
         if tools.TOOL_MAPPING[tool][choice] is not None:
             if choice not in settings:
                 settings[choice] = {}
-            project_tools[tool] = tools.TOOL_MAPPING[tool][choice](settings[choice], directory)
+            project_tools[tool] = tools.TOOL_MAPPING[tool][choice](
+                    settings[choice], proj, directory)
+            proj.register_tool(tool, project_tools[tool])
             print('\t' + str(project_tools[tool]))
 
     print()

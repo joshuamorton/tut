@@ -1,23 +1,23 @@
 import tools.vcs
-import tools.environment
+import tools.env
 import tools.lang
-import tools.dependency
+import tools.dep
 import tools.test
 
-EVALUATION_ORDER = ['vcs', 'environment', 'lang' ,'dependency', 'test']
+EVALUATION_ORDER = ['vcs', 'env', 'lang' ,'dep', 'test']
 
 TOOL_MAPPING = {
         'vcs': {
             'git': tools.vcs.GitTool,
             'hg': None
             },
-        'environment': {
-            'venv': tools.environment.VenvTool,
+        'env': {
+            'venv': tools.env.VenvTool,
             },
         'lang': {
-            'python': None
+            'python': tools.lang.PythonTool,
             },
-        'dependency': {
+        'dep': {
             'requirements': None
             },
         'test': {
