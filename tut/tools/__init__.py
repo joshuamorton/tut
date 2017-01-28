@@ -18,7 +18,7 @@ TOOL_MAPPING = {
             'python': tools.lang.PythonTool,
             },
         'dep': {
-            'requirements': None
+            'requirements': tools.dep.RequirementsTool,
             },
         'test': {
             'pytest': None

@@ -26,6 +26,8 @@
  - Look into deployement integration, ie. wrapping distutils
  - Infer tools and config from existing environment in `init`
  - Implement some plugins
-    - A readme plugin as a basic example
+    - A liscense plugin as a basic example
+ - write readme
+ - tests
 
 

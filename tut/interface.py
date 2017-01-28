@@ -1,5 +1,6 @@
 import click
 import os
+import toml
 
 import utils
 import tools
@@ -87,6 +88,10 @@ def new(directory, modify, config_file=None, **build_tools):
             if tool in project_tools:
                 project_tools[tool].initialize_environment()
 
+    print('writing out local config')
+    with open('{}/.tutconfig.local'.format(os.path.abspath(directory)), 'w') as l:
+        toml.dump(settings, l)
+
 @cli.command()
 def shell():
     """Spawn an interactive shell inside the project environment.
@@ -99,11 +104,18 @@ def run():
     """
     pass
 
+
 @cli.command()
-def install():
+@click.argument('deps', nargs=-1)
+def install(deps):
     """Install a project dependency in the project environment.
     """
-    pass
+    local_config = utils.find_local_config(os.getcwd())
+    proj = project.Project(local_config)
+    # create a project
+    for dep in deps:
+        proj.dep.install(dep)
+
 
 @cli.command()
 def test():
