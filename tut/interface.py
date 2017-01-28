@@ -31,10 +31,10 @@ def init(directory, config_file=None):
 @click.option('--lang', '-l',
         type=click.Choice(['python']),
         help='Specify nondefault python version.')
-@click.option('--environment', '-e',
+@click.option('--env', '-e',
         type=click.Choice(['venv', 'virtualenv', 'conda', 'docker']),
         help='Specify nondefault virtual environment tool.')
-@click.option('--dependency', '-d',
+@click.option('--dep', '-d',
         type=click.Choice([]),
         help='Specify nondefault dependency management tool.')
 @click.option('--test', '-t',
