@@ -1,0 +1,31 @@
+ - Implement alternative vcs tools
+    - subversion
+    - mercurial
+ - Implement alternative environment tools
+    - virtualenv
+    - conda
+    - hypervisors? (docker, kubernetes)
+    - put virtualenv stuff in a hidden dir?
+        - look into pyvenv.cfg and PEP 405 for how the spec actually works and
+          if we can play around with it
+ - Implement languages
+    - python
+        - handle language versioning, and conflicts with alternate envs
+ - Implement dependency tools
+    - pipenv
+    - requirements.txt
+    - setup.py integration?
+ - Implement testing tools
+    - pytest
+    - nose
+    - unittest
+    - tox
+    - integration with CI/hypervisor environment
+ - Freeze local config into a .tutconfig.local
+ - Implement run and shell semantics
+ - Look into deployement integration, ie. wrapping distutils
+ - Infer tools and config from existing environment in `init`
+ - Implement some plugins
+    - A readme plugin as a basic example
+
+
