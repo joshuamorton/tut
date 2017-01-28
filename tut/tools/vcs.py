@@ -12,7 +12,7 @@ class GitTool(tools.tool.VCSTool):
         gitignore_path = os.path.join(self.root_dir, '.gitignore')
         with open(gitignore_path, 'w') as gitignore:
             text = requests.get('https://gitignore.io/api/{}'.format(
-                '.'.join(self.config['gi-types']))).text
+                ','.join(self.config['ignored-tools']))).text
             gitignore.write(text)
 
         with open(gitignore_path, 'a') as gitignore:

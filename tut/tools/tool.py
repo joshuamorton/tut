@@ -8,12 +8,13 @@ import abc
 import os
 
 class TutTool(metaclass=abc.ABCMeta):
-    def __init__(self, config, project_root):
+    def __init__(self, config, project, project_root):
         """Config is the python dict from the config file, either globally or
         locally.
         """
         self.config = config
-        self.root_dir = project_root
+        self.root_dir = os.path.abspath(project_root)
+        self.project = project
 
     @abc.abstractmethod
     def initialize_environment(self):
@@ -38,24 +39,12 @@ class TutTool(metaclass=abc.ABCMeta):
         return os.path.join(self.tut_dir, '.tutfile')
 
 
-class EnvironmentTool(TutTool, metaclass=abc.ABCMeta):
+class EnvTool(TutTool, metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def __enter__(self):
-        """Enter the project environment.
-
-        This would commonly be done by running `source dotdir/bin/activate`,
-        but could be handled differently for hypervisor based env management.
+    def run(self, *commands):
+        """Run command in the environment.
         """
         raise NotImplementedError()
-
-    @abc.abstractmethod
-    def __exit__(self, _type, value, traceback):
-        """Exit the project environment.
-
-        Akin to `deactivate` in venv.
-        """
-        raise NotImplementedError()
-
 
 class TestTool(TutTool, metaclass=abc.ABCMeta):
     @abc.abstractmethod
@@ -63,7 +52,7 @@ class TestTool(TutTool, metaclass=abc.ABCMeta):
         raise NotImplementedError()
 
 
-class DependencyTool(TutTool, metaclass=abc.ABCMeta):
+class DepTool(TutTool, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def install(self, dep):
         raise NotImplementedError()
@@ -76,4 +65,21 @@ class DependencyTool(TutTool, metaclass=abc.ABCMeta):
 class VCSTool(TutTool, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def ignore_files(self, *file_regexes):
+        raise NotImplementedError()
+
+
+class LangTool(TutTool, metaclass=abc.ABCMeta):
+    def __init__(self, config, project, project_root):
+        super().__init__(config, project, project_root)
+        self._version = self.resolve_version(config['version'])
+        if 'ignored-tools' in config:
+            project.vcs.config['ignored-tools'].extend(config['ignored-tools'])
+
+
+    @property
+    def version(self):
+        return self._version
+
+    @abc.abstractmethod
+    def resolve_version(self, version_str):
         raise NotImplementedError()
