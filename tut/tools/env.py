@@ -1,5 +1,4 @@
 import subprocess
-import os
 import pexpect
 
 import tools.tool
@@ -15,6 +14,12 @@ class VenvTool(tools.tool.EnvTool):
 
     def run(self, *commands):
         commands = list(commands)
-        print(os.getcwd())
         commands[0] = self.root_dir + '/bin/' + commands[0]
         return pexpect.run(' '.join(commands)).decode()
+
+    def run_in_shell(self, *commands):
+        commands = list(commands)
+        commands[0] = self.root_dir + '/bin/' + commands[0]
+        c = pexpect.spawn('/bin/bash', ['-c'] + commands)
+        c.expect(pexpect.EOF)
+        return c.read().decode()

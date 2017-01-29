@@ -3,7 +3,6 @@ import os
 import toml
 
 import utils
-import tools
 import project
 
 @click.group()
@@ -62,34 +61,15 @@ def new(directory, modify, config_file=None, **build_tools):
 
     settings['tools'].update({k: v for k, v in build_tools.items() if v})
 
-    project_tools = dict()
-    proj = project.Project()
+    proj = project.Project(settings, directory)
 
-    for tool in tools.EVALUATION_ORDER:
-        # this is the actual loop that will run everything
-        choice = settings['tools'][tool]
-        print("Using {} as {} tool.".format(choice, tool))
-        if tools.TOOL_MAPPING[tool][choice] is not None:
-            if choice not in settings:
-                settings[choice] = {}
-            project_tools[tool] = tools.TOOL_MAPPING[tool][choice](
-                    settings[choice], proj, directory)
-            proj.register_tool(tool, project_tools[tool])
-            print('\t' + str(project_tools[tool]))
-
-    print()
-    for plugin in settings['plugins']:
-        print(plugin, settings['plugins'][plugin])
 
     if modify:
-        print('modifying file structure')
-        os.mkdir(os.path.join(os.getcwd(), directory))
-        for tool in tools.EVALUATION_ORDER:
-            if tool in project_tools:
-                project_tools[tool].initialize_environment()
+        # actually modify the filesystem, but only if the flag is active
+        proj.initialize_environment()
 
     print('writing out local config')
-    with open('{}/.tutconfig.local'.format(os.path.abspath(directory)), 'w') as l:
+    with open('{}/.tutconfig.local'.format(proj.root_dir), 'w') as l:
         toml.dump(settings, l)
 
 @cli.command()
@@ -112,7 +92,6 @@ def install(deps):
     """
     local_config = utils.find_local_config(os.getcwd())
     proj = project.Project(local_config)
-    # create a project
     for dep in deps:
         proj.dep.install(dep)
 

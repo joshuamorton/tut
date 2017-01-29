@@ -46,6 +46,14 @@ class EnvTool(TutTool, metaclass=abc.ABCMeta):
         """
         raise NotImplementedError()
 
+    @abc.abstractmethod
+    def run_in_shell(self, *commands):
+        """Run a command in the environment, but in shell.
+
+        This should be roughly equivalent to subprocess.call(...,shell=True).
+        """
+        raise NotImplementedError()
+
 class TestTool(TutTool, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def test(self):
