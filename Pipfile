@@ -1,11 +1,12 @@
 [[source]]
-verify_ssl = true
 url = "https://pypi.python.org/simple"
+verify_ssl = true
 
 [packages]
-crayons = "*"
-pexpect = "*"
-toml = "*"
-requests = "*"
 requirements-parser = "*"
 click = "*"
+pytest = "*"
+requests = "*"
+toml = "*"
+crayons = "*"
+pexpect = "*"

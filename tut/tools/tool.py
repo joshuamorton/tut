@@ -44,6 +44,7 @@ class EnvTool(TutTool, metaclass=abc.ABCMeta):
         super().__init__(config, project, project_root)
         if 'ignored-tools' in config:
             project.vcs.config['ignored-tools'].extend(config['ignored-tools'])
+        self.env_dir = None
 
     @abc.abstractmethod
     def run(self, *commands):

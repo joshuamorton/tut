@@ -19,6 +19,7 @@ TOOL_MAPPING = {
             },
         'dep': {
             'requirements': tools.dep.RequirementsTool,
+            'pipenv': tools.dep.PipenvTool,
             },
         'test': {
             'pytest': tools.test.PytestTool
