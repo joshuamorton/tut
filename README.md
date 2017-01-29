@@ -3,8 +3,8 @@ tut
 
 Tut is a tool that makes python project management easier.
 
- - [Overview][#overview]
- - [Contributing][#contributing]
+ - [Overview](#overview)
+ - [Contributing](#contributing)
 
 ##Overview
 
