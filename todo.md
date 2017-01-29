@@ -13,7 +13,6 @@
         - handle language versioning, and conflicts with alternate envs
  - Implement dependency tools
     - pipenv
-    - requirements.txt
     - setup.py integration?
  - Implement testing tools
     - pytest
@@ -26,6 +25,8 @@
  - Look into deployement integration, ie. wrapping distutils
  - Infer tools and config from existing environment in `init`
  - Implement some plugins
-    - A readme plugin as a basic example
+    - A liscense plugin as a basic example
+ - write readme
+ - tests
 
 
