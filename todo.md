@@ -13,7 +13,6 @@
         - handle language versioning, and conflicts with alternate envs
  - Implement dependency tools
     - pipenv
-    - requirements.txt
     - setup.py integration?
  - Implement testing tools
     - pytest
