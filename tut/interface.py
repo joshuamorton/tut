@@ -35,7 +35,7 @@ def init(directory, config_file=None):
         type=click.Choice(['venv', 'virtualenv', 'conda', 'docker']),
         help='Specify nondefault virtual environment tool.')
 @click.option('--dep', '-d',
-        type=click.Choice([]),
+        type=click.Choice(['requirements', 'pipenv']),
         help='Specify nondefault dependency management tool.')
 @click.option('--test', '-t',
         type=click.Choice(['pytest', 'unittest', 'nose', 'tox']),
