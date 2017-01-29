@@ -79,10 +79,13 @@ def shell():
     pass
 
 @cli.command()
-def run():
+@click.argument('commands', nargs=-1)
+def run(commands):
     """Run a single command in the project environment.
     """
-    pass
+    local_config = utils.find_local_config(os.getcwd())
+    proj = project.Project(local_config)
+    proj.env.run(*commands)
 
 
 @cli.command()
@@ -100,7 +103,9 @@ def install(deps):
 def test():
     """Run project tests and report results.
     """
-    pass
+    local_config = utils.find_local_config(os.getcwd())
+    proj = project.Project(local_config)
+    proj.test.test()
 
 if __name__ == '__main__':
     cli()

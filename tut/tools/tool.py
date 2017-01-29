@@ -40,6 +40,11 @@ class TutTool(metaclass=abc.ABCMeta):
 
 
 class EnvTool(TutTool, metaclass=abc.ABCMeta):
+    def __init__(self, config, project, project_root):
+        super().__init__(config, project, project_root)
+        if 'ignored-tools' in config:
+            project.vcs.config['ignored-tools'].extend(config['ignored-tools'])
+
     @abc.abstractmethod
     def run(self, *commands):
         """Run command in the environment.

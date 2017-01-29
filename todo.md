@@ -15,18 +15,15 @@
     - pipenv
     - setup.py integration?
  - Implement testing tools
-    - pytest
     - nose
     - unittest
     - tox
     - integration with CI/hypervisor environment
- - Freeze local config into a .tutconfig.local
- - Implement run and shell semantics
+ - Implement shell semantics
  - Look into deployement integration, ie. wrapping distutils
  - Infer tools and config from existing environment in `init`
  - Implement some plugins
     - A liscense plugin as a basic example
- - write readme
  - tests
 
 
