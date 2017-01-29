@@ -21,6 +21,6 @@ TOOL_MAPPING = {
             'requirements': tools.dep.RequirementsTool,
             },
         'test': {
-            'pytest': None
+            'pytest': tools.test.PytestTool
             }
         }
