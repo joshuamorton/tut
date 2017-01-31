@@ -1,0 +1,15 @@
+[tools]
+vcs = "git"
+env = "venv"
+lang = "python"
+dep = "requirements"
+test = "pytest"
+
+
+[git]
+ignored-tools = ["vim"]
+ignored-files = []
+
+[python]
+version = 3.4
+ignored-tools = ["python"]
