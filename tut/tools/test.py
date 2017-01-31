@@ -1,7 +1,9 @@
 import os
-import tools.tool
 
-class PytestTool(tools.tool.TestTool):
+
+from tut.tools import tool
+
+class PytestTool(tool.TestTool):
     def initialize_environment(self):
         os.mkdir(os.path.join(self.root_dir, 'test'))
         self.project.dep.install('pytest')

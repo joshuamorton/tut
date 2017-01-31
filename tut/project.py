@@ -1,13 +1,14 @@
-import tools
-import utils
+import tut.tools
+import tut.utils
 import os
 
 class Project():
 
     def __init__(self, config, root_dir=None):
-        self.root_dir = root_dir or utils.find_project_root()
-        self._evaluation_order = tools.EVALUATION_ORDER
-        self._mapping = tools.TOOL_MAPPING
+        self.root_dir = root_dir or tut.utils.find_project_root()
+        self.root_dir = os.path.abspath(self.root_dir)
+        self._evaluation_order = tut.tools.EVALUATION_ORDER
+        self._mapping = tut.tools.TOOL_MAPPING
         self.config = config
         self.tools = {}
         self.vcs = None
@@ -29,9 +30,9 @@ class Project():
 
         print()
         
-
-        for plugin in self.config['plugins']:
-            print(plugin, self.config['plugins'][plugin])
+        if 'plugins' in self.config:
+            for plugin in self.config['plugins']:
+                print(plugin, self.config['plugins'][plugin])
 
 
     def _register_tool(self, role, obj):

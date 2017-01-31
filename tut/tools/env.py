@@ -1,10 +1,9 @@
 import subprocess
 import pexpect
 
-import tools.tool
+from tut.tools import tool
 
-
-class VenvTool(tools.tool.EnvTool):
+class VenvTool(tool.EnvTool):
     def __init__(self, config, project, root_dir):
         super().__init__(config, project, root_dir)
         self.child = None

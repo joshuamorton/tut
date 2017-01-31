@@ -1,8 +1,9 @@
-import tools.tool
 import shutil
 import subprocess
 
-class PythonTool(tools.tool.LangTool):
+from tut.tools import tool
+
+class PythonTool(tool.LangTool):
     def resolve_version(self, version_identifier):
         version = None
         if version_identifier in {'default', 'python'}:

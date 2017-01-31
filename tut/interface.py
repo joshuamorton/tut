@@ -2,8 +2,8 @@ import click
 import os
 import toml
 
-import utils
-import project
+import tut.utils as utils
+import tut.project as project
 
 @click.group()
 def cli():
@@ -68,9 +68,10 @@ def new(directory, modify, config_file=None, **build_tools):
         # actually modify the filesystem, but only if the flag is active
         proj.initialize_environment()
 
-    print('writing out local config')
-    with open('{}/.tutconfig.local'.format(proj.root_dir), 'w') as l:
-        toml.dump(settings, l)
+        print('writing out local config')
+        tutconfig_path = os.path.join(proj.root_dir, '.tutconfig.local')
+        with open(tutconfig_path, 'w') as l:
+            toml.dump(settings, l)
 
 @cli.command()
 def shell():

@@ -1,27 +1,27 @@
-import tools.vcs
-import tools.env
-import tools.lang
-import tools.dep
-import tools.test
+from tut.tools import vcs
+from tut.tools import env
+from tut.tools import lang
+from tut.tools import dep
+from tut.tools import test
 
 EVALUATION_ORDER = ['vcs', 'env', 'lang' ,'dep', 'test']
 
 TOOL_MAPPING = {
         'vcs': {
-            'git': tools.vcs.GitTool,
+            'git': vcs.GitTool,
             'hg': None
             },
         'env': {
-            'venv': tools.env.VenvTool,
+            'venv': env.VenvTool,
             },
         'lang': {
-            'python': tools.lang.PythonTool,
+            'python': lang.PythonTool,
             },
         'dep': {
-            'requirements': tools.dep.RequirementsTool,
-            'pipenv': tools.dep.PipenvTool,
+            'requirements': dep.RequirementsTool,
+            'pipenv': dep.PipenvTool,
             },
         'test': {
-            'pytest': tools.test.PytestTool
+            'pytest': test.PytestTool
             }
         }

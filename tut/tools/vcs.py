@@ -2,9 +2,9 @@ import os
 import subprocess
 import requests
 
-import tools.tool
+from tut.tools import tool
 
-class GitTool(tools.tool.VCSTool):
+class GitTool(tool.VCSTool):
     def initialize_environment(self):
         """Sets up a git repository in the directory.
         """

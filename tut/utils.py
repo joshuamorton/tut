@@ -1,8 +1,6 @@
 import os
 import toml
 
-def interactive_config_data():
-    raise NotImplementedError('not done yet')
 
 def find_global_config():
     if os.path.isfile(os.path.expanduser('~/.config/.tutconfig')):
@@ -28,9 +26,9 @@ def resolve_location(path):
     if os.path.isfile(os.path.expanduser(path)):
         return os.path.expanduser(path)
 
-def find_project_root(dir=None):
-    if dir:
-        cwd = os.path.abspath(dir)
+def find_project_root(path=None):
+    if path:
+        cwd = os.path.abspath(path)
     else:
         cwd = os.path.abspath(os.getcwd())
     current_dir = cwd
@@ -43,8 +41,8 @@ def find_project_root(dir=None):
         raise Exception('Cannot find project root')
     return project_root
 
-def find_local_config(dir):
-    root_dir = find_project_root(dir)
+def find_local_config(path):
+    root_dir = find_project_root(path)
     config_path = os.path.join(root_dir, '.tutconfig.local')
     with open(config_path) as f:
         config = toml.load(f)
