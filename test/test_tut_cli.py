@@ -53,6 +53,9 @@ class TutCLITest(unittest.TestCase):
             local_config = toml.loads(m.mock_calls[15][1][0])
             assert local_config['python']['version'] > 3
             assert local_config['git']['ignored-files'] == []
+            # this is actually an important check, since it is one of the
+            # few things that isn't just a straight copy paste.
+            assert local_config['git']['ignored-tools'] == ['vim', 'python']
             assert local_config['tools'] == {
                     'vcs': 'git', 'env': 'venv', 'lang': 'python',
                     'dep': 'requirements', 'test': 'pytest'
