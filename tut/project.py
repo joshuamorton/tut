@@ -6,6 +6,7 @@ class Project():
 
     def __init__(self, config, root_dir=None):
         self.root_dir = root_dir or tut.utils.find_project_root()
+        self.root_dir = os.path.abspath(self.root_dir)
         self._evaluation_order = tut.tools.EVALUATION_ORDER
         self._mapping = tut.tools.TOOL_MAPPING
         self.config = config
