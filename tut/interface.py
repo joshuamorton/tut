@@ -2,8 +2,8 @@ import click
 import os
 import toml
 
-import utils
-import project
+import tut.utils as utils
+import tut.project as project
 
 @click.group()
 def cli():

@@ -1,8 +1,8 @@
-import tools.tool
 import os
 import pexpect
 
-class RequirementsTool(tools.tool.DepTool):
+from tut.tools import tool
+class RequirementsTool(tool.DepTool):
     def install(self, dep):
         self.project.env.run('pip install {}'.format(dep))
         print(self.root_dir)
@@ -15,7 +15,7 @@ class RequirementsTool(tools.tool.DepTool):
     def initialize_environment(self):
         pass
 
-class PipenvTool(tools.tool.DepTool):
+class PipenvTool(tool.DepTool):
     def __init__(self, config, project, root_dir):
         super().__init__(config, project, root_dir)
         self.project.env.env_dir = os.path.join(
