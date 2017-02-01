@@ -1,5 +1,7 @@
 from unittest.mock import MagicMock
+
 import _io
+
 _old_open = open
 
 def conditionally_mock_open(path, read_data=None):

@@ -3,6 +3,7 @@ import subprocess
 
 from tut.tools import tool
 
+
 class PythonTool(tool.LangTool):
     def resolve_version(self, version_identifier):
         version = None
@@ -40,5 +41,3 @@ class PythonTool(tool.LangTool):
         if not self.is_newer(self.version, python_version):
             raise EnvironmentError('Your environment was instantiated with'
                     'an older version of python than you expected')
-
-

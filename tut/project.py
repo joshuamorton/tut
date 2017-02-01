@@ -1,6 +1,8 @@
+import os
+
 import tut.tools
 import tut.utils
-import os
+
 
 class Project():
 
@@ -43,4 +45,3 @@ class Project():
         for tool in self._evaluation_order:
             if tool in self.tools:
                 self.tools[tool].initialize_environment()
-

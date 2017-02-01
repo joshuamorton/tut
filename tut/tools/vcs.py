@@ -1,8 +1,10 @@
 import os
 import subprocess
+
 import requests
 
 from tut.tools import tool
+
 
 class GitTool(tool.VCSTool):
     def initialize_environment(self):

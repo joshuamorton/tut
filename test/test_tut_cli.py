@@ -1,12 +1,13 @@
 import os
-import toml
+import test.utils
 import unittest
 from unittest import mock
 
-
 from click.testing import CliRunner
+
+import toml
 import tut
-import test.utils
+
 
 class TutCLITest(unittest.TestCase):
     def test_basic_config(self):
@@ -47,4 +48,3 @@ class TutCLITest(unittest.TestCase):
                     }
             with open(os.path.join(fs, 'project_name/requirements.txt')) as f:
                 assert 'pytest' in f.read()
-

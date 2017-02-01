@@ -1,7 +1,9 @@
 import subprocess
+
 import pexpect
 
 from tut.tools import tool
+
 
 class VenvTool(tool.EnvTool):
     def __init__(self, config, project, root_dir):

@@ -1,7 +1,7 @@
 import os
 
-
 from tut.tools import tool
+
 
 class PytestTool(tool.TestTool):
     def initialize_environment(self):

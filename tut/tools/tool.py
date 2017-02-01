@@ -7,6 +7,7 @@ to by the shell commands.
 import abc
 import os
 
+
 class TutTool(metaclass=abc.ABCMeta):
     def __init__(self, config, project, project_root):
         """Config is the python dict from the config file, either globally or

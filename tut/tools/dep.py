@@ -1,7 +1,10 @@
 import os
+
 import pexpect
 
 from tut.tools import tool
+
+
 class RequirementsTool(tool.DepTool):
     def install(self, dep):
         self.project.env.run('pip install {}'.format(dep))
