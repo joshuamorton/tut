@@ -27,14 +27,9 @@ class TutCLITest(unittest.TestCase):
                     'include',  # venv files
                     '.git', '.gitignore',  # git directory
                     'test',  # test directory
-                    'requirements.txt',
-                    '.tutconfig.local'}  # requirements file
-                    # normally there would also be
-                    # in addition to the above files
+                    'requirements.txt',  # requirements file
+                    '.tutconfig.local'}  # local project config
 
-            # because we are mocking the open calls in the calls to the tool,
-            # we need to check that .gitignore was created via some other
-            # method.
             
             fs_files = set(os.listdir(os.path.join(fs, 'project_name')))
             assert files == fs_files
@@ -42,6 +37,7 @@ class TutCLITest(unittest.TestCase):
                 local_config = toml.load(f)
             assert local_config['python']['version'] > 3
             assert local_config['git']['ignored-files'] == []
+
             # this is actually an important check, since it is one of the
             # few things that isn't just a straight copy paste.
             assert local_config['git']['ignored-tools'] == ['vim', 'python']
